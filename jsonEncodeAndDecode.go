@@ -20,12 +20,12 @@ func (e *Employees) Unmarshal(b []byte) error {
 	log.Fatal("JSON unmarshal error.")
     }
     for _, employee := range *e {
-        fmt.Println(employee.Firstname, employee.Lastname, employee.Age, employee.Location)
+        fmt.Printf("FirstName=%10s LastName=%10s Age=%02d Location=%10s\n", employee.Firstname, employee.Lastname, employee.Age, employee.Location)
     }
     return nil
 }
 
-func (e *Employee) Marshal() ([]byte, error) {
+func (e *Employees) Marshal() ([]byte, error) {
     return json.Marshal(e)
 }
 
@@ -38,21 +38,18 @@ func main() {
         fmt.Println("JSON:", string(jsonBlob))
         fmt.Println("**************** unmarshelling.**********")
         var employees Employees
-	      employees.Unmarshal(jsonBlob)
+	employees.Unmarshal(jsonBlob)
         fmt.Println("**************** done.**********")
         fmt.Println("**************** marshelling.**********")
-
-        for _, emp := range employees {
-		        fmt.Println("Marshaling: ", emp)
-		        jsonBlob, err := emp.Marshal()
-		        if err == nil {
-		                fmt.Println("JSON:", string(jsonBlob))
-               }
-	}
+	fmt.Println("Marshaling: ", employees)
+	jsonBlob, err := employees.Marshal()
+	if err == nil {
+	    fmt.Println("JSON:", string(jsonBlob))
+        }
         fmt.Println("**************** done.**********")
 }
 
-/*********************************************************
+/***************************************************************************************************
 RUN:
 $ go run exampleJSON.go 
 JSON: [
@@ -61,16 +58,12 @@ JSON: [
                          {"Firstname": "XYZ", "Lastname": "Roy", "Age": 15, "Location": "Hong Kong"}
                        ]
 **************** unmarshelling.**********
-ABC Roy 12 Fremont
-PQR Roy 8 San Jose
-XYZ Roy 15 Hong Kong
+FirstName=       ABC LastName=       Roy Age=12 Location=   Fremont
+FirstName=       PQR LastName=       Roy Age=08 Location=  San Jose
+FirstName=       XYZ LastName=       Roy Age=15 Location= Hong Kong
 **************** done.**********
 **************** marshelling.**********
-Marshaling:  {ABC Roy 12 Fremont}
-JSON: {"Firstname":"ABC","Lastname":"Roy","Age":12,"Location":"Fremont"}
-Marshaling:  {PQR Roy 8 San Jose}
-JSON: {"Firstname":"PQR","Lastname":"Roy","Age":8,"Location":"San Jose"}
-Marshaling:  {XYZ Roy 15 Hong Kong}
-JSON: {"Firstname":"XYZ","Lastname":"Roy","Age":15,"Location":"Hong Kong"}
+Marshaling:  [{ABC Roy 12 Fremont} {PQR Roy 8 San Jose} {XYZ Roy 15 Hong Kong}]
+JSON: [{"Firstname":"ABC","Lastname":"Roy","Age":12,"Location":"Fremont"},{"Firstname":"PQR","Lastname":"Roy","Age":8,"Location":"San Jose"},{"Firstname":"XYZ","Lastname":"Roy","Age":15,"Location":"Hong Kong"}]
 **************** done.**********
-***********************************************************************/
+*******************************************************************************************************/
