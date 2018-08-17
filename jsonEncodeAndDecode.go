@@ -47,6 +47,18 @@ func main() {
 	    fmt.Println("JSON:", string(jsonBlob))
         }
         fmt.Println("**************** done.**********")
+	
+	fmt.Println("**************** unmarshelling for map of interface{}.**********")
+	var jsonBlob1 = []byte(`{ "FirstName": "XYZ", "LastName": "PQR", "Location": "ABC" }`)
+        var intfMap map[string]interface{}
+        if err := json.Unmarshal(jsonBlob1, &intfMap); err != nil {
+	    log.Fatal("JSON unmarshal error.")
+        }
+        for k, v := range intfMap {
+            fmt.Println(k, v)
+        }
+        fmt.Println("**************** done.**********")
+
 }
 
 /***************************************************************************************************
@@ -66,4 +78,11 @@ FirstName=       XYZ LastName=       Roy Age=15 Location= Hong Kong
 Marshaling:  [{ABC Roy 12 Fremont} {PQR Roy 8 San Jose} {XYZ Roy 15 Hong Kong}]
 JSON: [{"Firstname":"ABC","Lastname":"Roy","Age":12,"Location":"Fremont"},{"Firstname":"PQR","Lastname":"Roy","Age":8,"Location":"San Jose"},{"Firstname":"XYZ","Lastname":"Roy","Age":15,"Location":"Hong Kong"}]
 **************** done.**********
+
+**************** unmarshelling for map of interface{}.**********
+FirstName XYZ
+LastName PQR
+Location ABC
+**************** done.**********
+
 *******************************************************************************************************/
