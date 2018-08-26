@@ -8,19 +8,19 @@ Here is the test results of ringbuffer package.
 * #go test -v ringbuffer
 
 ```
-go test -v ringbuffer
 === RUN   TestSetup
 --- PASS: TestSetup (0.00s)
-=== RUN   TestTeardown
---- PASS: TestTeardown (0.00s)
 === RUN   TestWrite
 --- PASS: TestWrite (0.00s)
 === RUN   TestRead
 --- PASS: TestRead (0.00s)
-PASS
+=== RUN   TestTeardown
 Reader2  ==>  Writer2(1)
 Reader1  ==>  Writer1(1)
-ok  	ringbuffer	(cached)
+--- PASS: TestTeardown (0.10s)
+PASS
+ok  	ringbuffer	0.120s
+
 ```
 
 Here is the example code that imports it as package.
