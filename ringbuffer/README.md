@@ -1,7 +1,10 @@
 Created ringbuffer as package so we can importit in other applications. The example is provided below.
 
 
-Here is the test results.
+Here is the test results of ringbuffer package.
+#go build ringbuffer
+#go install ringbuffer
+#go test -v ringbuffer
 ```
 go test -v ringbuffer
 === RUN   TestSetup
