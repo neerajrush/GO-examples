@@ -1,8 +1,8 @@
-package ringbuffer
+package  ringbuffer
 
 import (
-	"sync"
 	"testing"
+	"sync"
 )
 
 var ringBuff *RingBuffer
@@ -13,20 +13,20 @@ func TestSetup(t *testing.T) {
 	wg = &sync.WaitGroup{}
 }
 
-func TestTeardown(t *testing.T) {
-	wg.Wait()
-}
-
 func TestWrite(t *testing.T) {
-	go ringBuff.Write("Writer1", 100, wg)
+	go ringBuff.Write("Writer1", 2, wg)
 	wg.Add(1)
-	go ringBuff.Write("Writer2", 100, wg)
+	go ringBuff.Write("Writer2", 2, wg)
 	wg.Add(1)
 }
 
 func TestRead(t *testing.T) {
-	go ringBuff.Read("Reader1", 100, wg)
+	go ringBuff.Read("Reader1", 2, wg)
 	wg.Add(1)
-	go ringBuff.Read("Reader2", 100, wg)
+	go ringBuff.Read("Reader2", 2, wg)
 	wg.Add(1)
+}
+
+func TestTeardown(t *testing.T) {
+	wg.Wait()
 }
