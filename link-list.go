@@ -9,15 +9,15 @@ type Node struct {
 	next* Node
 }
 
-func (node Node) get_next() (*Node) {
+func (node Node) getNext() (*Node) {
 	return node.next
 }
 
-func (node *Node) set_next(newNode* Node) {
+func (node *Node) setNext(newNode* Node) {
 	node.next = newNode
 }
 
-func (node Node) get_data() (string) {
+func (node Node) getData() (string) {
 	return node.data
 }
 
@@ -25,97 +25,97 @@ type LinkList struct {
 	head* Node
 }
 
-func (link_list* LinkList) insert(newNode Node) {
-	if link_list.head == nil {
-		link_list.head = &newNode
-		link_list.head.set_next(nil)
+func (ll* LinkList) insert(newNode Node) {
+	if ll.head == nil {
+		ll.head = &newNode
+		ll.head.setNext(nil)
 	}
-	itor := link_list.head
+	itor := ll.head
 	prev := itor
 	for itor != nil {
 	       prev = itor
-               itor = itor.get_next()
+               itor = itor.getNext()
 	}
-	prev.set_next(&newNode)
-	newNode.set_next(nil)
+	prev.setNext(&newNode)
+	newNode.setNext(nil)
 }
 
-func (link_list LinkList) print_list() {
-	itor := link_list.head
+func (ll LinkList) printList() {
+	itor := ll.head
         fmt.Println("-----------------------")
 	for itor != nil {
-		fmt.Println(itor.get_data())
-		itor = itor.get_next()
+		fmt.Println(itor.getData())
+		itor = itor.getNext()
 	}
         fmt.Println("-----------------------")
 }
 
-func (link_list LinkList) size() int {
-	itor := link_list.head
+func (ll LinkList) size() int {
+	itor := ll.head
 	count := 0
 	for itor != nil {
-		itor = itor.get_next()
+		itor = itor.getNext()
 		count += 1
 	}
 	return count
 }
 
-func (link_list* LinkList) reverse() {
-	if link_list.head == nil || link_list.head.get_next() == nil {
+func (ll* LinkList) reverse() {
+	if ll.head == nil || ll.head.getNext() == nil {
 		return
 	}
 
-	x := link_list.head
-	y := x.get_next()
-	x.set_next(nil)
+	x := ll.head
+	y := x.getNext()
+	x.setNext(nil)
 	p := x
 	for y != nil {
 		p = x
 		x = y
-		y = x.get_next()
-		x.set_next(p)
+		y = x.getNext()
+		x.setNext(p)
 	}
-	link_list.head = x
+	ll.head = x
 	return
 }
 
-func (link_list LinkList) search(data string) (bool, int) {
-	itor := link_list.head
+func (ll LinkList) search(data string) (bool, int) {
+	itor := ll.head
 	count := 0
 	for itor != nil {
-		if itor.get_data() == data {
+		if itor.getData() == data {
 			count += 1
 		}
-		itor = itor.get_next()
+		itor = itor.getNext()
 	}
 	return count > 0, count
 }
 
-func (link_list* LinkList) reverseRecursive(x* Node, y* Node, p* Node) {
+func (ll* LinkList) reverseRecursive(x* Node, y* Node, p* Node) {
 	if y == nil {
-		link_list.head = x
+		ll.head = x
 		return
 	}
 
         p = x
 	x = y
-	y = x.get_next()
-	x.set_next(p)
+	y = x.getNext()
+	x.setNext(p)
 
-	link_list.reverseRecursive(x, y, p)
+	ll.reverseRecursive(x, y, p)
 }
 
-func (link_list* LinkList) reverseIt() {
-	if link_list.head == nil || link_list.head.get_next() == nil {
+func (ll* LinkList) reverseIt() {
+	if ll.head == nil || ll.head.getNext() == nil {
 		return
 	}
 
-	x := link_list.head
-	y := x.get_next()
-	x.set_next(nil)
+	x := ll.head
+	y := x.getNext()
+	x.setNext(nil)
 	p := x
 
-	link_list.reverseRecursive(x, y, p)
+	ll.reverseRecursive(x, y, p)
 }
 
 func main() {
@@ -154,6 +154,6 @@ func main() {
 	fmt.Printf("Found: %t Count:%d\n", found, count)
 
 	ll.reverseIt()
-	ll.print_list()
+	ll.printList()
 	fmt.Println(ll.size())
 }
