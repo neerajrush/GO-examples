@@ -1,4 +1,4 @@
-Created ringbuffer as package and importing it in other applications.
+Created ringbuffer as package so we can importit in other applications. The example is provided below.
 
 
 Here is the test results.
