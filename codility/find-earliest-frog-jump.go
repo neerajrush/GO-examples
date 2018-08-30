@@ -49,21 +49,18 @@ each element of array A is an integer within the range [1..X].
 func Solution(X int, A []int) int {
 	n := len(A)
 	lx := make([]int, n+1)
-	count := 0
+	counter := 0
 	for i,v := range A {
 		if v > n {
 			return -1
 		}
-		lx[v] = 1
-		for j := 1; j < X+1; j++ {
-			if lx[j] == 1 {
-				count++
-			}
+		if lx[v] == 0 {
+			lx[v] = 1
+			counter++
 		}
-		if count == X {
+		if counter == X {
 			return i
 		}
-		count = 0
 	}
 	return -1
 }
