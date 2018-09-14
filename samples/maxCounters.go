@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"bytes"
+)
 
 /***************
 You are given N counters, initially set to 0, and you have two possible operations on them:
@@ -60,3 +63,33 @@ Write an efficient algorithm for the following assumptions:
 N and M are integers within the range [1..100,000];
 each element of array A is an integer within the range [1..N + 1].
 *******************************************************************/
+
+func Solution(N int, A []int) []int {
+	results := make([]int, N)
+	maxVal := 0
+	for _,v := range A {
+		if v > N+1 {
+			continue
+		}
+		if v == N+1 {
+			//for i,_ := range results {
+				//results[i] = maxVal
+			//}
+			x := bytes.Repeat([]byte(s), N)
+			copy(results, x)
+			continue
+		}
+		results[v-1]++
+		if results[v-1] > maxVal {
+			maxVal = results[v-1]
+		}
+	}
+
+	return results
+}
+
+func main() {
+	A := []int{ 3, 4, 4, 6, 1, 4, 4 }
+	results := Solution(5, A)
+	fmt.Println(A, results)
+}
