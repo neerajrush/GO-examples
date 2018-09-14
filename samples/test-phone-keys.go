@@ -2,93 +2,70 @@ package main
 
 import "fmt"
 
-/*****************
-public List<String> letterCombinations(String digits) {
-    String[][] reference = {{"a", "b", "c"}, {"d", "e", "f"}, {"g", "h", "i"}, {"j", "k", "l"}, {"m", "n", "o"}, {"p", "q", "r", "s"}, {"t", "u", "v"}, {"w", "x", "y", "z"}};
-    List<String> res = new ArrayList<>();
-    if (digits == null) {
-        return res;
-    }
-    List<String> strs = new ArrayList<>();
-    strs.add("");
-    for (int i = 0; i < digits.length(); i++) {
-        int num = digits.charAt(i) - '0';
-        int idx = num - 2;
-        res.clear();
-        for (String s : strs) {
-            for (String t : reference[idx]) {
-                res.add(s + t);
-            }
-        }
-        strs = new ArrayList<>(res);
-    }
-    return res;
-}
-*****************/
-
-var D map[int]string
-
-func findCombinations(A string) string {
+func findCombinations(A string) []string {
 	if A == "0" {
-		return "0"
+		result := make([]string, 1)
+		result[0] = "0"
+		return result
 	}
 	if A == "1" {
-		return "1"
+		result := make([]string, 1)
+		result[0] = "1"
+		return result
 	}
         ref := [][]string{{"A", "B", "C"}, {"D", "E", "F"}, {"G", "H", "I"}, {"J", "K", "L"}, {"M", "N", "O"}, {"P", "Q", "R", "S"}, {"T", "U", "V"}, {"W", "X", "Y", "Z"}}
-	result := make([]string, 0)
+	result := make([]string, 1)
 
 	for _,ip := range A {
 		k := int(ip - '0')
 		idx := k - 2
 		T := make([]string, 0)
-		for 
-		T = append(T, ref[idx])
+	        for r,_ := range result {
+			for _, e := range ref[idx] {
+				T = append(T, result[r]+e)
+			}
+		}
+		result = make([]string, len(T))
+		copy(result, T)
 	}
 
 	return result
 }
 
+var D map[int]string
+
 
 func main() {
 	D = map[int]string{ 0:"0", 1:"1", 2:"ABC", 3:"DEF", 4:"GHI", 5:"JKL", 6:"MNO", 7:"PQRS", 8:"TUV", 9:"WXYZ" }
 	input := "23"
-        fmt.Println(findCombinations(input))
-	return
+	result := make([]string, 1)
 	if len(input) == 0 {
 		return
 	}
 	if len(input) == 1 {
 	        for _,ip := range input {
 			if v,ok := D[int(ip-'0')]; ok {
-				fmt.Println(v)
+				result[0] = v
 			}
 		}
+		fmt.Println(result)
 		return
 	}
-        TT := make([][]string, len(input))
-	idx := 0
 	for _,ip := range input {
-		k := int(ip - '0')
-		if v,ok := D[k]; ok {
-			TT[idx] = make([]string, 0)
-			for _,c := range v {
-				TT[idx] = append(TT[idx], string(c))
+		K := int(ip - '0')
+		if V,ok := D[K]; ok {
+		        T := make([]string, 0)
+			for _,r := range result {
+				for  _,v := range V {
+					T = append(T, r + string(v))
+				}
 			}
-			fmt.Println(TT[idx])
-			idx++
+			result = make([]string, len(T))
+			copy(result, T)
 		}
 	}
-	for i := 0; i < len(input); i++ {
-		if i+1 < len(input) {
-                    S := TT[i]
-		    for j := 0; j < len(S); j++ {
-			for k := 0; k < len(S); k++ {
-				fmt.Println(TT[i][j] + TT[k][j])
-			}
-		    }
-		}
-	}
+	fmt.Println(result)
+        fmt.Println(findCombinations(input))
 }
 
 //A B C
