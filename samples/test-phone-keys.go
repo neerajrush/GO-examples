@@ -2,6 +2,20 @@ package main
 
 import "fmt"
 
+var D map[int]string
+
+func findCombinationsRecursive(result *[]string, input, resultStr string, pos int) {
+	if pos >= len(input) {
+		*result = append(*result, resultStr)
+		return
+	}
+	if inp,ok := D[int(input[pos] - '0')]; ok {
+		for _,s := range inp {
+			findCombinationsRecursive(result, input, resultStr+string(s), pos+1)
+		}
+	}
+}
+
 func findCombinations(A string) []string {
 	if A == "0" {
 		result := make([]string, 1)
@@ -31,8 +45,6 @@ func findCombinations(A string) []string {
 
 	return result
 }
-
-var D map[int]string
 
 
 func main() {
@@ -66,6 +78,9 @@ func main() {
 	}
 	fmt.Println(result)
         fmt.Println(findCombinations(input))
+	r_result := make([]string, 0)
+	findCombinationsRecursive(&r_result, input, " ", 0)
+	fmt.Println(r_result)
 }
 
 //A B C
