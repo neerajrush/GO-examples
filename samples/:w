@@ -1,4 +1,0 @@
-package main
-
-func sqrt(x int) float64 {
-}

@@ -59,7 +59,6 @@ each element of array A is an integer that can have one of the following values:
 **************************************************************************************/
 
 var fibMap map[int]bool
-var P map[int]int
 
 func init() {
 	fibMap = make(map[int]bool)
@@ -72,7 +71,6 @@ func init() {
 		A[i] = A[i-1] + A[i-2]
 		fibMap[A[i]] = true
 	}
-	P = make(map[int]int)
 }
 
 func isFiboJump(n int) bool {
@@ -118,31 +116,30 @@ func SolutionDynamic(A []int) int {
 		return 1
 	}
 
-	if _,ok := P[n]; ok {
-		return P[n]
-	}
-
 	minJumps := math.MaxInt32
+	L := make([]int, n)
 
         for i := 0; i < n; i++ {
-	    if A[i] == 0 || !isFiboJump(i+1) {
-		  continue
-	    }
-	    if isFiboJump(n-i) {
-		return 2
-	    }
-	    t := SolutionDynamic(A[i+1:])
-            if t == -1 {
-		continue
-	    }
-	    minJumps = 1  + int(math.Min(float64(t), float64(minJumps)))
+	        if A[i] == 0 || !isFiboJump(i+1) {
+			continue
+		}
+		L[i] = 1
+		for j := i+1; j < n; j++ {
+	            if A[j] == 0 || !isFiboJump(j+1) {
+		        continue
+	            }
+	            if isFiboJump(n-j) {
+		        L[j] += 1
+			break
+	            }
+	            L[j] += 1
+	        }
 	}
+	fmt.Println(L)
 
 	if minJumps == math.MaxInt32 {
-	        P[n] = -1
 		return -1
 	}
-	P[n] = minJumps
 	return minJumps
 }
 
