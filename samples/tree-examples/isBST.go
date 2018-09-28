@@ -72,11 +72,11 @@ func printTree(root *Node, order, depth int) {
 
 var prev *Node
 
-func isBST(root *Node) bool {
+func isBSTInOrderTraversal(root *Node) bool {
 	if root == nil {
 		return true
 	}
-	if !isBST(root.left) {
+	if !isBSTInOrderTraversal(root.left) {
 		return false
 	}
 	if prev != nil && prev.data > root.data {
@@ -84,7 +84,44 @@ func isBST(root *Node) bool {
 		return false
 	}
 	prev = root
-	if isBST(root.right) {
+	if isBSTInOrderTraversal(root.right) {
+		return true
+	}
+	return false
+}
+
+func isLeftSubtreeLesser(root *Node, data int) bool {
+	if root == nil {
+		return true
+	}
+	if root.data < data  &&
+	    isLeftSubtreeLesser(root.left, data) &&
+             isLeftSubtreeLesser(root.right, data) {
+		return true
+	}
+	return false
+}
+
+func isRightSubtreeGreater(root *Node, data int) bool {
+	if root == nil {
+		return true
+	}
+	if root.data > data &&
+	    isRightSubtreeGreater(root.left, data)  &&
+             isRightSubtreeGreater(root.right, data) {
+		return true
+	}
+	return false
+}
+
+func isBST(root *Node) bool {
+	if root == nil {
+		return true
+	}
+	if  isLeftSubtreeLesser(root.left, root.data) &&
+	      isRightSubtreeGreater(root.right, root.data) &&
+		isBST(root.left) &&
+		 isBST(root.right) {
 		return true
 	}
 	return false
@@ -201,16 +238,17 @@ func main() {
 	fmt.Println("++++++++++++++++++")
 	printTree(root, 2, depth)
 	fmt.Println("++++++++++++++++++")
-	result := isBST(root)
+	result := isBSTInOrderTraversal(root)
 	fmt.Println("isBST: ", result)
 	fmt.Println("++++++++++++++++++")
-	addNode(root, 5, 7) // more than 8 makes it non-BST
+	addNode(root, 5, 20) // more than 8 makes it non-BST
 	printTree(root, 1, depth)
 	prev = nil
-	result = isBST(root)
+	result = isBSTInOrderTraversal(root)
+	result1 := isBST(root)
 	h := calcMaxHeight(root)
 	w := calcMaxWidth(root)
 	wl := calcWidth(root)
-	fmt.Println("isBST:", result, "Height:", h, "Width:", w, "width;", wl)
+	fmt.Println("isBST:", result, "isBST:", result1, "Height:", h, "Width:", w, "width;", wl)
 	fmt.Println("++++++++++++++++++")
 }

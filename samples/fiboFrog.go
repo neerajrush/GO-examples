@@ -125,21 +125,22 @@ func SolutionDynamic(A []int) int {
 		}
 		L[i] = 1
 		for j := i+1; j < n; j++ {
-	            if A[j] == 0 || !isFiboJump(j+1) {
-		        continue
+	            if A[j] == 1 && isFiboJump(j+1) {
+		        L[i] += 1
 	            }
-	            if isFiboJump(n-j) {
-		        L[j] += 1
-			break
-	            }
-	            L[j] += 1
 	        }
 	}
-	fmt.Println(L)
+	fmt.Println("L:", L)
+	for _,v := range L {
+		if v != 0 && minJumps > v {
+			minJumps = v
+		}
+	}
 
 	if minJumps == math.MaxInt32 {
 		return -1
 	}
+
 	return minJumps
 }
 
